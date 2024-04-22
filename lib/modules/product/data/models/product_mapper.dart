@@ -7,7 +7,7 @@ class ProductMapper {
     return ProductEntity(
       id: map['id'],
       title: map['title'],
-      price: map['price'],
+      price: double.parse(map['price'].toString()),
       category: map['category'],
       description: map['description'],
       image: map['image'],
