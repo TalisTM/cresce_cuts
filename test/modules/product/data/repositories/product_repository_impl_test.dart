@@ -1,5 +1,5 @@
 import 'package:cresce_cuts/modules/product/data/datasources/product_datasource.dart';
-import 'package:cresce_cuts/modules/product/data/repositories/register_repository_impl.dart';
+import 'package:cresce_cuts/modules/product/data/repositories/product_repository_impl.dart';
 import 'package:cresce_cuts/modules/product/domain/exception/product_exception.dart';
 import 'package:cresce_cuts/modules/product/domain/repositories/product_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -19,7 +19,7 @@ main() {
 
   group('ProductRepository', () {
     group('getProducts', () {
-      test('Deve retornar [true] para a validação do mnemonic', () async {
+      test('Deve retornar uma lista de produtos', () async {
         when(() => datasource.getProducts()).thenAnswer((_) async => productsMock);
 
         final result = await repository.getProducts();

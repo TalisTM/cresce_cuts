@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../app/app_module.dart';
 import 'data/datasources/product_datasource.dart';
 import 'data/datasources/product_datasource_impl.dart';
-import 'data/repositories/register_repository_impl.dart';
+import 'data/repositories/product_repository_impl.dart';
 import 'domain/repositories/product_repository.dart';
 import 'domain/usecases/get_products_usecase.dart';
 import 'presentation/product/product_controller.dart';

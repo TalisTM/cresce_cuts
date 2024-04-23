@@ -18,7 +18,7 @@ main() {
 
   group('ProductDatasource', () {
     group('getProducts', () {
-      test('Deve buscar e retornar uma lista de produtos', () async {
+      test('Deve retornar e retornar uma lista de produtos', () async {
         when(() => dio.get(any())).thenAnswer((invocation) async => responseMock);
 
         final result = await datasource.getProducts();
