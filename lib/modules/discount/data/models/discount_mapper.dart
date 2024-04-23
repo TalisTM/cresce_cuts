@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../../../core/contants/enums.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../product/data/models/product_mapper.dart';
 import '../../domain/entities/discount_entity.dart';
 

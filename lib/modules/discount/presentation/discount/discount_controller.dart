@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 
-import '../../../../core/contants/enums.dart';
+import '../../../../core/enums/enums.dart';
 import '../../domain/entities/discount_entity.dart';
 import '../../domain/usecases/get_discounts_usecase.dart';
 
@@ -33,4 +33,13 @@ abstract class DiscountControllerBase with Store {
       );
     });
   }
+
+  @action
+  Future<void> createDiscount() async {}
+
+  @action
+  Future<void> updateDiscount() async {}
+
+  @action
+  Future<void> deleteDiscount() async {}
 }

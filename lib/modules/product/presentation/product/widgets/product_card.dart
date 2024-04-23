@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../domain/entities/product_entity.dart';
 
@@ -11,7 +12,7 @@ class ProductCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       child: InkWell(
-        onTap: () {},
+        onTap: () => Modular.to.pop(product),
         borderRadius: BorderRadius.circular(8),
         child: Container(
           decoration: BoxDecoration(

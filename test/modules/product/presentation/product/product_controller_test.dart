@@ -1,4 +1,4 @@
-import 'package:cresce_cuts/core/contants/enums.dart';
+import 'package:cresce_cuts/core/enums/enums.dart';
 import 'package:cresce_cuts/modules/product/domain/entities/product_entity.dart';
 import 'package:cresce_cuts/modules/product/domain/exception/product_exception.dart';
 import 'package:cresce_cuts/modules/product/domain/usecases/get_products_usecase.dart';

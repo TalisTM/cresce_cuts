@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/contants/enums.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../product/domain/entities/product_entity.dart';
 
 class DiscountEntity extends Equatable {

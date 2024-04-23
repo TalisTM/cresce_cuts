@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 
-import '../../../../core/contants/enums.dart';
+import '../../../../core/enums/enums.dart';
 import '../../domain/entities/product_entity.dart';
 import '../../domain/usecases/get_products_usecase.dart';
 

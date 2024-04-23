@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/contants/enums.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../../core/ui/widgets/empty_data.dart';
 import '../../../../core/ui/widgets/loader.dart';
 import '../../../../core/ui/widgets/try_again.dart';

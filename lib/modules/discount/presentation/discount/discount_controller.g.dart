@@ -49,6 +49,30 @@ mixin _$DiscountController on DiscountControllerBase, Store {
     return _$getDiscountsAsyncAction.run(() => super.getDiscounts());
   }
 
+  late final _$createDiscountAsyncAction =
+      AsyncAction('DiscountControllerBase.createDiscount', context: context);
+
+  @override
+  Future<void> createDiscount() {
+    return _$createDiscountAsyncAction.run(() => super.createDiscount());
+  }
+
+  late final _$updateDiscountAsyncAction =
+      AsyncAction('DiscountControllerBase.updateDiscount', context: context);
+
+  @override
+  Future<void> updateDiscount() {
+    return _$updateDiscountAsyncAction.run(() => super.updateDiscount());
+  }
+
+  late final _$deleteDiscountAsyncAction =
+      AsyncAction('DiscountControllerBase.deleteDiscount', context: context);
+
+  @override
+  Future<void> deleteDiscount() {
+    return _$deleteDiscountAsyncAction.run(() => super.deleteDiscount());
+  }
+
   @override
   String toString() {
     return '''

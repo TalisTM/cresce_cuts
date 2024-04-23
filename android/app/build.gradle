@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "br.com.talismarchioro.cresce_cuts"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {

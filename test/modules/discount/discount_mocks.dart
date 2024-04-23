@@ -1,4 +1,4 @@
-import 'package:cresce_cuts/core/contants/enums.dart';
+import 'package:cresce_cuts/core/enums/enums.dart';
 import 'package:cresce_cuts/core/services/local_storage/local_storage.dart';
 import 'package:cresce_cuts/modules/discount/data/datasources/discount_datasource.dart';
 import 'package:cresce_cuts/modules/discount/domain/entities/discount_entity.dart';

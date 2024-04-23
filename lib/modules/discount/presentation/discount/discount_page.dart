@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/contants/enums.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../../core/ui/widgets/empty_data.dart';
 import '../../../../core/ui/widgets/loader.dart';
 import '../../../../core/ui/widgets/try_again.dart';
+import '../../../product/domain/entities/product_entity.dart';
+import '../../domain/entities/discount_entity.dart';
 import 'discount_controller.dart';
 import 'widgets/discount_card.dart';
 
@@ -36,8 +38,8 @@ class _DiscountPageState extends State<DiscountPage> {
       body: Observer(
         builder: (context) {
           if (controller.status == Status.success) {
-            final products = controller.discounts;
-            return products.isEmpty
+            final discounts = controller.discounts;
+            return discounts.isEmpty
                 ? const EmptyData(
                     title: 'Vazio',
                     content:
@@ -46,7 +48,7 @@ class _DiscountPageState extends State<DiscountPage> {
                 : ListView.builder(
                     itemCount: controller.discounts.length,
                     itemBuilder: (context, index) {
-                      return DiscountCard(discount: products[index]);
+                      return DiscountCard(discount: discounts[index]);
                     },
                   );
           } else if (controller.status == Status.error) {
@@ -63,7 +65,16 @@ class _DiscountPageState extends State<DiscountPage> {
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(horizontal: 20),
         child: ElevatedButton(
-          onPressed: () => Modular.to.pushNamed('/product'),
+          onPressed: () async {
+            ProductEntity? product = await Modular.to.pushNamed('/product');
+            if (product == null) return;
+
+            DiscountEntity? discount =
+                await Modular.to.pushNamed('/crud-discount', arguments: product);
+
+            if (discount == null) return;
+            controller.createDiscount();
+          },
           child: const Text("Cadastrar desconto"),
         ),
       ),
