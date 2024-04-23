@@ -8,12 +8,15 @@ class EmptyData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(title),
-          Text(content),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(title, textAlign: TextAlign.center),
+            Text(content, textAlign: TextAlign.center),
+          ],
+        ),
       ),
     );
   }

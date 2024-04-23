@@ -20,8 +20,10 @@ class DiscountDatasourceImpl implements DiscountDatasource {
     try {
       final response = await _localStorage.read<List<String>>(Endpoints.discountKey);
 
+      if (response == null) return <DiscountEntity>[];
+
       final discounts = <DiscountEntity>[];
-      for (var discount in response!) {
+      for (var discount in response) {
         discounts.add(DiscountMapper.fromJson(discount));
       }
       return discounts;
