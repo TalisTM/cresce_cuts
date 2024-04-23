@@ -1,12 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../app/app_module.dart';
-import '../product/domain/entities/product_entity.dart';
 import 'data/datasources/discount_datasource.dart';
 import 'data/datasources/discount_datasource_impl.dart';
 import 'data/repositories/discount_repository_impl.dart';
 import 'domain/repositories/discount_repository.dart';
+import 'domain/usecases/create_discount_usecase.dart';
+import 'domain/usecases/delete_discount_usecase.dart';
 import 'domain/usecases/get_discounts_usecase.dart';
+import 'domain/usecases/update_discount_usecase.dart';
 import 'presentation/crud_discount/crud_discount_controller.dart';
 import 'presentation/crud_discount/crud_discount_page.dart';
 import 'presentation/discount/discount_controller.dart';
@@ -23,6 +25,9 @@ class DiscountModule extends Module {
     i.addLazySingleton<DiscountDatasource>(DiscountDatasourceImpl.new);
     i.addLazySingleton<DiscountRepository>(DiscountRepositoryImpl.new);
     i.addLazySingleton<GetDiscountsUseCase>(GetDiscountsUseCaseImpl.new);
+    i.addLazySingleton<CreateDiscountUseCase>(CreateDiscountUseCaseImpl.new);
+    i.addLazySingleton<UpdateDiscountUseCase>(UpdateDiscountUseCaseImpl.new);
+    i.addLazySingleton<DeleteDiscountUseCase>(DeleteDiscountUseCaseImpl.new);
     i.addLazySingleton<DiscountController>(DiscountController.new);
     i.addLazySingleton<CrudDiscountController>(CrudDiscountController.new);
   }
@@ -30,10 +35,12 @@ class DiscountModule extends Module {
   @override
   void routes(r) {
     r.child('/', child: (context) => const DiscountPage());
-    r.child('/crud-discount', child: (context) {
-      return r.args.data is ProductEntity
-          ? CrudDiscountPage(product: r.args.data)
-          : CrudDiscountPage(discount: r.args.data);
-    });
+    r.child(
+      '/crud-discount',
+      child: (context) => CrudDiscountPage(
+        product: r.args.data['product'],
+        discount: r.args.data['discount'],
+      ),
+    );
   }
 }

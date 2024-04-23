@@ -61,16 +61,18 @@ mixin _$DiscountController on DiscountControllerBase, Store {
       AsyncAction('DiscountControllerBase.updateDiscount', context: context);
 
   @override
-  Future<void> updateDiscount() {
-    return _$updateDiscountAsyncAction.run(() => super.updateDiscount());
+  Future<void> updateDiscount(DiscountEntity discount) {
+    return _$updateDiscountAsyncAction
+        .run(() => super.updateDiscount(discount));
   }
 
   late final _$deleteDiscountAsyncAction =
       AsyncAction('DiscountControllerBase.deleteDiscount', context: context);
 
   @override
-  Future<void> deleteDiscount() {
-    return _$deleteDiscountAsyncAction.run(() => super.deleteDiscount());
+  Future<void> deleteDiscount(DiscountEntity discount) {
+    return _$deleteDiscountAsyncAction
+        .run(() => super.deleteDiscount(discount));
   }
 
   @override

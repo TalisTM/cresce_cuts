@@ -18,7 +18,7 @@ class DiscountDatasourceImpl implements DiscountDatasource {
   @override
   Future<List<DiscountEntity>> getDiscounts() async {
     try {
-      final response = await _localStorage.read<List<String>>(Endpoints.discountKey);
+      final response = await _localStorage.read(Endpoints.discountKey);
 
       if (response == null) return <DiscountEntity>[];
 

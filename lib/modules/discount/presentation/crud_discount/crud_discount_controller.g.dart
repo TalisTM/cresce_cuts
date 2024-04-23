@@ -9,22 +9,6 @@ part of 'crud_discount_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CrudDiscountController on CrudDiscountControllerBase, Store {
-  late final _$isUpdateAtom =
-      Atom(name: 'CrudDiscountControllerBase.isUpdate', context: context);
-
-  @override
-  bool get isUpdate {
-    _$isUpdateAtom.reportRead();
-    return super.isUpdate;
-  }
-
-  @override
-  set isUpdate(bool value) {
-    _$isUpdateAtom.reportWrite(value, super.isUpdate, () {
-      super.isUpdate = value;
-    });
-  }
-
   late final _$discountTypeAtom =
       Atom(name: 'CrudDiscountControllerBase.discountType', context: context);
 
@@ -77,17 +61,6 @@ mixin _$CrudDiscountController on CrudDiscountControllerBase, Store {
       ActionController(name: 'CrudDiscountControllerBase', context: context);
 
   @override
-  dynamic setIsUpdate(bool value) {
-    final _$actionInfo = _$CrudDiscountControllerBaseActionController
-        .startAction(name: 'CrudDiscountControllerBase.setIsUpdate');
-    try {
-      return super.setIsUpdate(value);
-    } finally {
-      _$CrudDiscountControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setDiscountType(DiscountType value) {
     final _$actionInfo = _$CrudDiscountControllerBaseActionController
         .startAction(name: 'CrudDiscountControllerBase.setDiscountType');
@@ -123,7 +96,6 @@ mixin _$CrudDiscountController on CrudDiscountControllerBase, Store {
   @override
   String toString() {
     return '''
-isUpdate: ${isUpdate},
 discountType: ${discountType},
 activationDate: ${activationDate},
 deactivationDate: ${deactivationDate}

@@ -8,12 +8,6 @@ class CrudDiscountController = CrudDiscountControllerBase with _$CrudDiscountCon
 
 abstract class CrudDiscountControllerBase with Store {
   @observable
-  bool isUpdate = false;
-
-  @action
-  setIsUpdate(bool value) => isUpdate = value;
-
-  @observable
   DiscountType discountType = DiscountType.ofBy;
 
   @action

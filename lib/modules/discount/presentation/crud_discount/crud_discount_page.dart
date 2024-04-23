@@ -6,13 +6,16 @@ import '../../../../core/enums/enums.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import '../../../product/domain/entities/product_entity.dart';
 import '../../domain/entities/discount_entity.dart';
+import '../../domain/entities/discount_of_by_entity.dart';
+import '../../domain/entities/discount_percentage_entity.dart';
+import '../../domain/entities/discount_takes_paid_entity.dart';
 import 'crud_discount_controller.dart';
 import 'widgets/select_discount_type_button.dart';
 
 class CrudDiscountPage extends StatefulWidget {
   final DiscountEntity? discount;
-  final ProductEntity? product;
-  const CrudDiscountPage({super.key, this.discount, this.product});
+  final ProductEntity product;
+  const CrudDiscountPage({super.key, this.discount, required this.product});
 
   @override
   State<CrudDiscountPage> createState() => _CrudDiscountPageState();
@@ -35,31 +38,21 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
 
   @override
   void initState() {
-    if (widget.discount != null) {
-      controller.setIsUpdate(true);
+    titleEC.text = widget.product.title;
+    descriptionEC.text = widget.product.description;
+    priceEC.text = widget.product.price.toString();
 
-      titleEC.text = widget.discount!.product.title;
-      descriptionEC.text = widget.discount!.product.description;
-      priceEC.text = widget.discount!.product.price.toString();
+    final discount = widget.discount;
+    if (discount == null) return;
 
-      switch (widget.discount!.discountType) {
-        case DiscountType.ofBy:
-          howMuchPayEC.text = widget.discount!.howMuckPay?.toString() ?? '';
-          break;
-        case DiscountType.percentage:
-          percentageDiscountEC.text = widget.discount!.percentage?.toString() ?? '';
-          break;
-        case DiscountType.takePay:
-          amountTakesEC.text = widget.discount!.amountTakes?.toString() ?? '';
-          amountPaidEC.text = widget.discount!.amountPaid?.toString() ?? '';
-          break;
-      }
-    } else {
-      titleEC.text = widget.product!.title;
-      descriptionEC.text = widget.product!.description;
-      priceEC.text = widget.product!.price.toString();
+    if(discount is DiscountOfByEntity) {
+      howMuchPayEC.text = discount.howMuckPay.toString();
+    } else if (discount is DiscountPercentageEntity) {
+      percentageDiscountEC.text = discount.percentage.toString();
+    } else if(discount is DiscountTakesPaidEntity) {
+      amountTakesEC.text = discount.amountTakes.toString();
+        amountPaidEC.text = discount.amountPaid.toString();
     }
-
     super.initState();
   }
 
@@ -111,52 +104,38 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                       Row(
                         children: [
                           Expanded(
-                              child: CustomTextField(
-                            controller: priceEC,
-                            label: 'Preço "DE"',
-                          )),
+                            child: CustomTextField(controller: priceEC, label: 'Preço "DE"'),
+                          ),
                           const SizedBox(width: 10),
                           Expanded(
-                              child: CustomTextField(
-                            controller: howMuchPayEC,
-                            label: 'Preço "POR"',
-                          )),
+                            child: CustomTextField(controller: howMuchPayEC, label: 'Preço "POR"'),
+                          ),
                         ],
                       ),
                     if (controller.discountType == DiscountType.percentage)
                       Row(
                         children: [
-                          Expanded(
-                              child: CustomTextField(
-                            controller: priceEC,
-                            label: 'Preço',
-                          )),
+                          Expanded(child: CustomTextField(controller: priceEC, label: 'Preço')),
                           const SizedBox(width: 10),
                           Expanded(
-                              child: CustomTextField(
-                            controller: howMuchPayEC,
-                            label: 'Percentual de desconto',
-                          )),
+                            child: CustomTextField(
+                              controller: howMuchPayEC,
+                              label: 'Percentual de desconto',
+                            ),
+                          ),
                         ],
                       ),
                     if (controller.discountType == DiscountType.takePay) ...[
-                      CustomTextField(
-                        controller: priceEC,
-                        label: 'Preço',
-                      ),
+                      CustomTextField(controller: priceEC, label: 'Preço'),
                       Row(
                         children: [
                           Expanded(
-                              child: CustomTextField(
-                            controller: amountTakesEC,
-                            label: 'Leve',
-                          )),
+                            child: CustomTextField(controller: amountTakesEC, label: 'Leve'),
+                          ),
                           const SizedBox(width: 10),
                           Expanded(
-                              child: CustomTextField(
-                            controller: amountPaidEC,
-                            label: 'Pague',
-                          )),
+                            child: CustomTextField(controller: amountPaidEC, label: 'Pague'),
+                          ),
                         ],
                       ),
                     ],
@@ -171,25 +150,27 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                 final deactivationDate = controller.deactivationDate;
                 return Row(
                   children: [
-                    InkWell(
-                        onTap: () async {
-                          await _selectDate(
-                            context: context,
-                            onChanged: (value) => controller.setActivationDate(value),
-                            firstDate: DateTime.now(),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            const Text('Data ativação'),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[200]!),
+                    Expanded(
+                      child: InkWell(
+                          onTap: () async {
+                            await _selectDate(
+                              context: context,
+                              onChanged: (value) => controller.setActivationDate(value),
+                              firstDate: DateTime.now(),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              const Text('Data ativação'),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey[200]!),
+                                ),
+                                child: Text(activationDate?.toString() ?? '-'),
                               ),
-                              child: Text(activationDate?.toString() ?? '-'),
-                            ),
-                          ],
-                        )),
+                            ],
+                          )),
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: InkWell(
@@ -222,59 +203,55 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
               builder: (_) {
                 return ElevatedButton(
                   onPressed: () {
-                    if (controller.isUpdate) {
-                      final product = ProductEntity(
-                        id: widget.discount!.product.id,
-                        title: titleEC.text,
-                        price: double.parse(priceEC.text),
-                        category: widget.discount!.product.category,
-                        description: descriptionEC.text,
-                        image: widget.discount!.product.image,
-                      );
+                    final product = ProductEntity(
+                      id: widget.product.id,
+                      title: titleEC.text,
+                      price: double.parse(priceEC.text),
+                      category: widget.product.category,
+                      description: descriptionEC.text,
+                      image: widget.product.image,
+                    );
 
-                      final discount = DiscountEntity(
-                        id: widget.discount!.id,
-                        product: product,
-                        discountType: controller.discountType,
-                        activationDate: controller.activationDate!,
-                        deactivationDate: controller.deactivationDate!,
-                      );
-
-                      Modular.to.pop(discount);
-                    } else {
-                      final product = ProductEntity(
-                        id: widget.product!.id,
-                        title: titleEC.text,
-                        price: double.parse(priceEC.text),
-                        category: widget.product!.category,
-                        description: descriptionEC.text,
-                        image: widget.product!.image,
-                      );
-
-                      final discount = DiscountEntity(
-                        id: DateTime.now().millisecondsSinceEpoch,
-                        product: product,
-                        discountType: controller.discountType,
-                        activationDate: controller.activationDate!,
-                        deactivationDate: controller.deactivationDate!,
-                        howMuckPay: controller.discountType == DiscountType.ofBy
-                            ? double.parse(howMuchPayEC.text)
-                            : null,
-                        percentage: controller.discountType == DiscountType.percentage
-                            ? double.parse(percentageDiscountEC.text)
-                            : null,
-                        amountPaid: controller.discountType == DiscountType.takePay
-                            ? int.parse(amountPaidEC.text)
-                            : null,
-                        amountTakes: controller.discountType == DiscountType.takePay
-                            ? int.parse(amountTakesEC.text)
-                            : null,
-                      );
-
-                      Modular.to.pop(discount);
+                    DiscountEntity discount;
+                    final id = widget.discount?.id ?? DateTime.now().millisecondsSinceEpoch;
+                    final activationDate = controller.activationDate;
+                    final deactivationDate = controller.deactivationDate;
+                    switch (controller.discountType) {
+                      case DiscountType.ofBy:
+                        discount = DiscountOfByEntity(
+                          id: id,
+                          product: product,
+                          activationDate: activationDate!,
+                          deactivationDate: deactivationDate!,
+                          howMuckPay: double.parse(howMuchPayEC.text),
+                        );
+                        break;
+                      case DiscountType.percentage:
+                        discount = DiscountPercentageEntity(
+                          id: id,
+                          product: product,
+                          activationDate: activationDate!,
+                          deactivationDate: deactivationDate!,
+                          percentage: double.parse(percentageDiscountEC.text),
+                        );
+                        break;
+                      case DiscountType.takePay:
+                        discount = DiscountTakesPaidEntity(
+                          id: id,
+                          product: product,
+                          activationDate: activationDate!,
+                          deactivationDate: deactivationDate!,
+                          amountPaid: int.parse(amountPaidEC.text),
+                          amountTakes: int.parse(amountTakesEC.text),
+                        );
+                        break;
+                      default:
+                        throw Exception('Not found Disconte Type Data');
                     }
+
+                    Modular.to.pop(discount);
                   },
-                  child: Text(controller.isUpdate ? 'Atualizar' : 'Salvar'),
+                  child: Text(widget.discount != null ? 'Atualizar' : 'Salvar'),
                 );
               },
             )

@@ -65,16 +65,7 @@ class _DiscountPageState extends State<DiscountPage> {
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(horizontal: 20),
         child: ElevatedButton(
-          onPressed: () async {
-            ProductEntity? product = await Modular.to.pushNamed('/product');
-            if (product == null) return;
-
-            DiscountEntity? discount =
-                await Modular.to.pushNamed('/crud-discount', arguments: product);
-
-            if (discount == null) return;
-            controller.createDiscount();
-          },
+          onPressed: () => controller.createDiscount(),
           child: const Text("Cadastrar desconto"),
         ),
       ),
