@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/enums/enums.dart';
+import '../../../../core/ui/helpers/messages_helper.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import '../../../product/domain/entities/product_entity.dart';
 import '../../domain/entities/discount_entity.dart';
@@ -24,7 +25,7 @@ class CrudDiscountPage extends StatefulWidget {
   State<CrudDiscountPage> createState() => _CrudDiscountPageState();
 }
 
-class _CrudDiscountPageState extends State<CrudDiscountPage> {
+class _CrudDiscountPageState extends State<CrudDiscountPage> with MessageHelper<CrudDiscountPage> {
   final controller = Modular.get<CrudDiscountController>();
 
   final formKey = GlobalKey<FormState>();
@@ -294,80 +295,107 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                    child: Observer(
-                      builder: (_) {
-                        return ElevatedButton(
-                          onPressed: () async {
-                            final validate = formKey.currentState?.validate() ?? false;
-                            if (!validate) return;
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Observer(
+                            builder: (_) {
+                              return ElevatedButton(
+                                onPressed: () async {
+                                  final validate = formKey.currentState?.validate() ?? false;
+                                  if (!validate) return;
 
-                            final activationDate = controller.activationDate;
-                            final deactivationDate = controller.deactivationDate;
+                                  final activationDate = controller.activationDate;
+                                  final deactivationDate = controller.deactivationDate;
 
-                            if (activationDate == null || deactivationDate == null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Escolha a data para o desconto')),
+                                  if (activationDate == null || deactivationDate == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Escolha a data para o desconto')),
+                                    );
+                                    return;
+                                  }
+
+                                  final product = ProductEntity(
+                                    id: widget.product.id,
+                                    title: titleEC.text,
+                                    price: UtilBrasilFields.converterMoedaParaDouble(priceEC.text),
+                                    category: widget.product.category,
+                                    description: descriptionEC.text,
+                                    image: widget.product.image,
+                                  );
+
+                                  DiscountEntity discount;
+                                  final id =
+                                      widget.discount?.id ?? DateTime.now().millisecondsSinceEpoch;
+                                  final isActive = widget.discount?.isActive ?? false;
+                                  switch (controller.discountType) {
+                                    case DiscountType.ofBy:
+                                      discount = DiscountOfByEntity(
+                                        id: id,
+                                        product: product,
+                                        isActive: isActive,
+                                        activationDate: activationDate,
+                                        deactivationDate: deactivationDate,
+                                        howMuckPay: UtilBrasilFields.converterMoedaParaDouble(
+                                          howMuchPayEC.text,
+                                        ),
+                                      );
+                                      break;
+                                    case DiscountType.percentage:
+                                      discount = DiscountPercentageEntity(
+                                        id: id,
+                                        product: product,
+                                        isActive: isActive,
+                                        activationDate: activationDate,
+                                        deactivationDate: deactivationDate,
+                                        percentage: double.parse(percentageDiscountEC.text),
+                                      );
+                                      break;
+                                    case DiscountType.takePay:
+                                      discount = DiscountTakesPaidEntity(
+                                        id: id,
+                                        product: product,
+                                        isActive: isActive,
+                                        activationDate: activationDate,
+                                        deactivationDate: deactivationDate,
+                                        amountPaid: int.parse(amountPaidEC.text),
+                                        amountTakes: int.parse(amountTakesEC.text),
+                                      );
+                                      break;
+                                    default:
+                                      throw Exception('Not found Disconte Type Data');
+                                  }
+                                  widget.discount != null
+                                      ? await Modular.get<DiscountController>()
+                                          .updateDiscount(discount)
+                                      : await Modular.get<DiscountController>()
+                                          .createDiscount(discount);
+                                  Modular.to.pushNamedAndRemoveUntil('/discount', (p0) => false);
+                                },
+                                child: Text(widget.discount != null ? 'Atualizar' : 'Salvar'),
                               );
-                              return;
-                            }
-
-                            final product = ProductEntity(
-                              id: widget.product.id,
-                              title: titleEC.text,
-                              price: UtilBrasilFields.converterMoedaParaDouble(priceEC.text),
-                              category: widget.product.category,
-                              description: descriptionEC.text,
-                              image: widget.product.image,
-                            );
-
-                            DiscountEntity discount;
-                            final id = widget.discount?.id ?? DateTime.now().millisecondsSinceEpoch;
-                            final isActive = widget.discount?.isActive ?? false;
-                            switch (controller.discountType) {
-                              case DiscountType.ofBy:
-                                discount = DiscountOfByEntity(
-                                  id: id,
-                                  product: product,
-                                  isActive: isActive,
-                                  activationDate: activationDate,
-                                  deactivationDate: deactivationDate,
-                                  howMuckPay: UtilBrasilFields.converterMoedaParaDouble(
-                                    howMuchPayEC.text,
-                                  ),
-                                );
-                                break;
-                              case DiscountType.percentage:
-                                discount = DiscountPercentageEntity(
-                                  id: id,
-                                  product: product,
-                                  isActive: isActive,
-                                  activationDate: activationDate,
-                                  deactivationDate: deactivationDate,
-                                  percentage: double.parse(percentageDiscountEC.text),
-                                );
-                                break;
-                              case DiscountType.takePay:
-                                discount = DiscountTakesPaidEntity(
-                                  id: id,
-                                  product: product,
-                                  isActive: isActive,
-                                  activationDate: activationDate,
-                                  deactivationDate: deactivationDate,
-                                  amountPaid: int.parse(amountPaidEC.text),
-                                  amountTakes: int.parse(amountTakesEC.text),
-                                );
-                                break;
-                              default:
-                                throw Exception('Not found Disconte Type Data');
-                            }
-                            widget.discount != null
-                                ? await Modular.get<DiscountController>().updateDiscount(discount)
-                                : await Modular.get<DiscountController>().createDiscount(discount);
-                            Modular.to.pushNamedAndRemoveUntil('/discount', (p0) => false);
-                          },
-                          child: Text(widget.discount != null ? 'Atualizar' : 'Salvar'),
-                        );
-                      },
+                            },
+                          ),
+                        ),
+                        if (widget.discount != null)
+                          IconButton(
+                            onPressed: () {
+                              showCustomDialog(
+                                'Apagar disconto',
+                                content: 'Realmente deseja apagar o desconto?',
+                                textPrimaryButton: 'Confirmar',
+                                textSecondaryButton: 'Cancelar',
+                                onPressedPrimaryButton: () {
+                                  Modular.get<DiscountController>()
+                                      .deleteDiscount(widget.discount!);
+                                  Modular.to.pushNamedAndRemoveUntil('/discount', (p0) => false);
+                                },
+                              );
+                            },
+                            icon: const Icon(Icons.delete),
+                          )
+                      ],
                     ),
                   ),
                 ],
