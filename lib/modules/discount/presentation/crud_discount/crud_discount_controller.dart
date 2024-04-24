@@ -110,40 +110,44 @@ abstract class CrudDiscountControllerBase with Store {
   setDeactivationDate(DateTime value) => deactivationDate = value;
 
   String? validateTitle(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return 'Por favor, insira um título.';
     }
     return null;
   }
 
   String? validateDescription(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return 'Por favor, insira uma descrição.';
     }
     return null;
   }
 
   String? validatePrice(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return 'Por favor, insira o preço.';
     }
     return null;
   }
 
   String? validatePercent(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return 'Por favor, insira o valor percentual.';
     }
-    final percent = double.parse(value);
-    if (percent == 0 || percent > 100) {
+    final percent = double.tryParse(value);
+    if (percent == null || percent == 0 || percent > 100) {
       return 'Por favor, insira um percentual válido.';
     }
     return null;
   }
 
   String? validateTakesPaid(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return 'Por favor, insira a quantidade.';
+    }
+    final amount = double.tryParse(value);
+    if (amount == null || amount <= 0) {
+      return 'Por favor, insira um percentual válido.';
     }
     return null;
   }

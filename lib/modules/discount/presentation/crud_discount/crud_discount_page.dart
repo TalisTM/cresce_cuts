@@ -101,7 +101,6 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> with MessageHelper<
                 delegate: SliverChildListDelegate.fixed(
                   [
                     CustomTextField(
-                      padding: const EdgeInsets.only(top: 20),
                       controller: titleEC,
                       validator: controller.validateTitle,
                       label: 'Nome desconto',
