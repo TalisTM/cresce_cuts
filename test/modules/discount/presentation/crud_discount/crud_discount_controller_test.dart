@@ -1,44 +1,47 @@
 import 'package:cresce_cuts/core/enums/enums.dart';
 import 'package:cresce_cuts/modules/discount/presentation/crud_discount/crud_discount_controller.dart';
+import 'package:cresce_cuts/modules/discount/presentation/discount/discount_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../discount_mocks.dart';
 
 void main() {
-  late CrudDiscountController controller;
+  late DiscountController discountController;
+  late CrudDiscountController crudDiscountController;
 
   setUp(() {
-    controller = CrudDiscountController();
+    discountController = DiscountControllerMock();
+    crudDiscountController = CrudDiscountController(discountController: discountController);
   });
 
   group('CrudDiscountController', () {
     group('setDiscountType', () {
       test('Deve setar o DiscountType recebido', () {
-        expect(controller.discountType, DiscountType.ofBy);
+        expect(crudDiscountController.discountType, DiscountType.ofBy);
 
-        controller.setDiscountType(DiscountType.percentage);
+        crudDiscountController.setDiscountType(DiscountType.percentage);
 
-        expect(controller.discountType, DiscountType.percentage);
+        expect(crudDiscountController.discountType, DiscountType.percentage);
       });
     });
 
     group('setActivationDate', () {
       test('Deve setar o activationDate recebido', () {
-        expect(controller.activationDate, null);
+        expect(crudDiscountController.activationDate, null);
 
-        controller.setActivationDate(dateTimeMock);
+        crudDiscountController.setActivationDate(dateTimeMock);
 
-        expect(controller.activationDate, dateTimeMock);
+        expect(crudDiscountController.activationDate, dateTimeMock);
       });
     });
 
     group('setDeactivationDate', () {
       test('Deve setar o deactivationDate recebido', () {
-        expect(controller.deactivationDate, null);
+        expect(crudDiscountController.deactivationDate, null);
 
-        controller.setDeactivationDate(dateTimeMock);
+        crudDiscountController.setDeactivationDate(dateTimeMock);
 
-        expect(controller.deactivationDate, dateTimeMock);
+        expect(crudDiscountController.deactivationDate, dateTimeMock);
       });
     });
   });

@@ -6,10 +6,13 @@ import 'package:cresce_cuts/modules/discount/domain/usecases/create_discount_use
 import 'package:cresce_cuts/modules/discount/domain/usecases/delete_discount_usecase.dart';
 import 'package:cresce_cuts/modules/discount/domain/usecases/get_discounts_usecase.dart';
 import 'package:cresce_cuts/modules/discount/domain/usecases/update_discount_usecase.dart';
+import 'package:cresce_cuts/modules/discount/presentation/discount/discount_controller.dart';
 import 'package:cresce_cuts/modules/product/domain/entities/product_entity.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LocalStorageMock extends Mock implements LocalStorage {}
+
+class DiscountControllerMock extends Mock implements DiscountController {}
 
 class DiscountDatasourceMock extends Mock implements DiscountDatasource {}
 
