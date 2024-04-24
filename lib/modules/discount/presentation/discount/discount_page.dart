@@ -8,8 +8,6 @@ import '../../../../core/enums/enums.dart';
 import '../../../../core/ui/widgets/empty_data.dart';
 import '../../../../core/ui/widgets/loader.dart';
 import '../../../../core/ui/widgets/try_again.dart';
-import '../../../product/domain/entities/product_entity.dart';
-import '../../domain/entities/discount_entity.dart';
 import 'discount_controller.dart';
 import 'widgets/discount_card.dart';
 
@@ -48,7 +46,11 @@ class _DiscountPageState extends State<DiscountPage> {
                 : ListView.builder(
                     itemCount: controller.discounts.length,
                     itemBuilder: (context, index) {
-                      return DiscountCard(discount: discounts[index]);
+                      final discount = discounts[index];
+                      return DiscountCard(
+                        discount: discount,
+                        onTap: () => controller.updateDiscount(discount),
+                      );
                     },
                   );
           } else if (controller.status == Status.error) {

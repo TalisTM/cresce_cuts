@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -72,8 +71,15 @@ abstract class DiscountControllerBase with Store {
 
   @action
   Future<void> updateDiscount(DiscountEntity discount) async {
+    DiscountEntity? updatedDiscount = await Modular.to.pushNamed(
+      '/crud-discount',
+      arguments: {'product': discount.product, 'discount': discount},
+    );
+
+    if (updatedDiscount == null) return;
+
     status = Status.loading;
-    await _updateDiscountUseCase(discount: discount).then((result) {
+    await _updateDiscountUseCase(discount: updatedDiscount).then((result) {
       result.fold(
         (error) => status = Status.error,
         (_) => getDiscounts(),

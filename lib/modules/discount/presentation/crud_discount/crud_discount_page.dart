@@ -119,7 +119,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: CustomTextField(
-                              controller: howMuchPayEC,
+                              controller: percentageDiscountEC,
                               label: 'Percentual de desconto',
                             ),
                           ),
