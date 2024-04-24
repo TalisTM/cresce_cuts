@@ -23,6 +23,7 @@ class UpdateDiscountUseCaseMock extends Mock implements UpdateDiscountUseCase {}
 
 class DeleteDiscountUseCaseMock extends Mock implements DeleteDiscountUseCase {}
 
+final dateTimeMock = DateTime(2024);
 
 const discountsJsonMock = [
   '{"id":1,"product":{"id":2,"title":"title","price":20.0,"category":"category","description":"description","image":"image"},"isActive":true,"activationDate":1713582000000,"deactivationDate":1714186800000,"howMuckPay":10.0,"discountType":"discountOfBy"}',
