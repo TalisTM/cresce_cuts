@@ -30,14 +30,14 @@ mixin MessageHelper<T extends StatefulWidget> on State<T> {
               children: [
                 if (textSecondaryButton != null)
                   Expanded(
-                    child: ElevatedButton(
+                    child: TextButton(
                       onPressed: onPressedSecondaryButton ?? () => Navigator.pop(context),
                       child: Text(textSecondaryButton),
                     ),
                   ),
                 if (textPrimaryButton != null)
                   Expanded(
-                    child: ElevatedButton(
+                    child: TextButton(
                       onPressed: onPressedPrimaryButton ?? () => Navigator.pop(context),
                       child: Text(textPrimaryButton),
                     ),

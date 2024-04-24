@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../core/ui/themes/app_themes.dart';
+
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
@@ -10,7 +12,7 @@ class AppWidget extends StatelessWidget {
       title: "Cresce Cuts",
       routerConfig: Modular.routerConfig,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: AppThemes.lightTheme,
     );
   }
 }

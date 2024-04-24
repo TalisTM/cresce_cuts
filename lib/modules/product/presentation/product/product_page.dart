@@ -40,6 +40,7 @@ class _ProductPageState extends State<ProductPage> {
             return products.isEmpty
                 ? const EmptyData(title: 'Vazio', content: 'Nenhum produto para ser mostrado')
                 : ListView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     itemCount: controller.products.length,
                     itemBuilder: (context, index) {
                       return ProductCard(product: products[index]);

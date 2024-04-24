@@ -1,3 +1,4 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -17,6 +18,12 @@ class DiscountCard extends StatelessWidget {
     if (discount is DiscountOfByEntity) discountType = 'De/Por';
     if (discount is DiscountPercentageEntity) discountType = 'percentual';
     if (discount is DiscountTakesPaidEntity) discountType = 'Leve pague';
+
+    final activationDate =
+        '${UtilData.obterDataDDMM(discount.activationDate)} - ${UtilData.obterHoraHHMM(discount.activationDate)}';
+    final deactivationDate =
+        '${UtilData.obterDataDDMM(discount.deactivationDate)} - ${UtilData.obterHoraHHMM(discount.deactivationDate)}';
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       child: Container(
@@ -73,7 +80,7 @@ class DiscountCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text('Data ativação'),
-                            Text(discount.activationDate.toString()),
+                            Text(activationDate),
                           ],
                         ),
                       ),
@@ -82,7 +89,7 @@ class DiscountCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text('Data inativação'),
-                            Text(discount.deactivationDate.toString()),
+                            Text(deactivationDate),
                           ],
                         ),
                       ),
@@ -97,7 +104,15 @@ class DiscountCard extends StatelessWidget {
                 '/discount/discount-details',
                 arguments: discount.id,
               ),
-              child: const Text('Ver desconto'),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Ver desconto'),
+                  SizedBox(width: 5),
+                  Icon(Icons.remove_red_eye_outlined),
+                ],
+              ),
             ),
             Container(color: Colors.grey[300], height: 1),
           ],

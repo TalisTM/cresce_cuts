@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/enums/enums.dart';
+import '../../../../../core/ui/themes/app_themes.dart';
 
 class SelectDiscountTypeButton extends StatelessWidget {
   final DiscountType discountType;
@@ -10,8 +11,11 @@ class SelectDiscountTypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 20),
         const Text('Tipo de desconto'),
+        const SizedBox(height: 10),
         Row(
           children: [
             _SelectButton(
@@ -33,6 +37,7 @@ class SelectDiscountTypeButton extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -49,7 +54,7 @@ class _SelectButton extends StatelessWidget {
     return Expanded(
       child: Ink(
         decoration: BoxDecoration(
-          color: isActive ? Colors.blue : Colors.grey,
+          color: isActive ? AppThemes.primary : AppThemes.lightGrey,
           borderRadius: BorderRadius.circular(8),
         ),
         child: InkWell(
@@ -57,7 +62,11 @@ class _SelectButton extends StatelessWidget {
           onTap: onTap,
           child: Container(
             padding: const EdgeInsets.all(5),
-            child: Text(label, textAlign: TextAlign.center),
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: isActive ? AppThemes.lightGrey : AppThemes.primary),
+            ),
           ),
         ),
       ),

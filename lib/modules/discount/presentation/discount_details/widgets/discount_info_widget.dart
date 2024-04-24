@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../core/ui/themes/app_themes.dart';
 import '../../../domain/entities/discount_entity.dart';
 import '../../../domain/entities/discount_of_by_entity.dart';
 import '../../../domain/entities/discount_percentage_entity.dart';
@@ -34,44 +35,46 @@ class DiscountInfoWidget extends StatelessWidget {
       subtitle = UtilBrasilFields.obterReal(discount.product.price);
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(2),
-          ),
-          child: Text(
-            title,
-            style: const TextStyle(color: Colors.white),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(2),
-              ),
-              child: Text(
-                subtitle,
-                style: const TextStyle(color: Colors.white),
-              ),
+    final decoration = BoxDecoration(
+      color: AppThemes.primary,
+      borderRadius: BorderRadius.circular(3),
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(5),
+            decoration: decoration,
+            child: Text(
+              title,
+              style: const TextStyle(color: Colors.white),
             ),
-            if (subTitlelineThrough != null) ...[
-              const SizedBox(width: 10),
-              Text(
-                subTitlelineThrough,
-                style: const TextStyle(decoration: TextDecoration.lineThrough),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(5),
+                decoration: decoration,
+                child: Text(
+                  subtitle,
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
+              if (subTitlelineThrough != null) ...[
+                const SizedBox(width: 10),
+                Text(
+                  subTitlelineThrough,
+                  style: const TextStyle(decoration: TextDecoration.lineThrough),
+                ),
+              ],
             ],
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
