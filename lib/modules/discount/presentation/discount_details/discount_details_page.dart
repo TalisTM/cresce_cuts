@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../domain/entities/discount_entity.dart';
+import 'widgets/discount_info_widget.dart';
 
 class DiscountDetailsPage extends StatelessWidget {
   final DiscountEntity discount;
@@ -35,7 +36,7 @@ class DiscountDetailsPage extends StatelessWidget {
                       child: Image.network(discount.product.image),
                     ),
                   ),
-                  _DiscountInfo(),
+                  DiscountInfoWidget(discount: discount),
                   Text(discount.product.title),
                   Text(discount.product.description),
                 ],
@@ -63,40 +64,6 @@ class DiscountDetailsPage extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-}
-
-class _DiscountInfo extends StatelessWidget {
-  const _DiscountInfo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(2),
-            ),
-            child: const Text('Leve 5 pague 3'),
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(2),
-            ),
-            child: const Text('R\$ 14,50'),
-          ),
-        ),
-      ],
     );
   }
 }
