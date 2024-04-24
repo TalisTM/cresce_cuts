@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
+  final String? prefixText;
   final String? hintText;
   final TextStyle? hintStyle;
   final TextStyle? labelStyle;
@@ -27,6 +28,7 @@ class CustomTextField extends StatelessWidget {
 
   const CustomTextField({
     required this.label,
+    this.prefixText,
     this.maxLines,
     this.hintText,
     this.labelStyle,
@@ -64,6 +66,9 @@ class CustomTextField extends StatelessWidget {
             child: Text(label),
           ),
           TextFormField(
+            decoration: InputDecoration(
+              prefixText: prefixText,
+            ),
             maxLines: maxLines,
             controller: controller,
             validator: validator,

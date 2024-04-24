@@ -24,4 +24,43 @@ abstract class CrudDiscountControllerBase with Store {
 
   @action
   setDeactivationDate(DateTime value) => deactivationDate = value;
+
+  String? validateTitle(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira um título.';
+    }
+    return null;
+  }
+
+  String? validateDescription(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira uma descrição.';
+    }
+    return null;
+  }
+
+  String? validatePrice(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira o preço.';
+    }
+    return null;
+  }
+
+  String? validatePercent(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira o valor percentual.';
+    }
+    final percent = double.parse(value);
+    if (percent == 0 || percent > 100) {
+      return 'Por favor, insira um percentual válido.';
+    }
+    return null;
+  }
+
+  String? validateTakesPaid(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira a quantidade.';
+    }
+    return null;
+  }
 }
