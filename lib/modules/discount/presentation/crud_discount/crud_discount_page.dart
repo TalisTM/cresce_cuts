@@ -9,6 +9,7 @@ import '../../domain/entities/discount_entity.dart';
 import '../../domain/entities/discount_of_by_entity.dart';
 import '../../domain/entities/discount_percentage_entity.dart';
 import '../../domain/entities/discount_takes_paid_entity.dart';
+import '../discount/discount_controller.dart';
 import 'crud_discount_controller.dart';
 import 'widgets/select_discount_type_button.dart';
 
@@ -50,11 +51,14 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
 
     if (discount is DiscountOfByEntity) {
       howMuchPayEC.text = discount.howMuckPay.toString();
+      controller.setDiscountType(DiscountType.ofBy);
     } else if (discount is DiscountPercentageEntity) {
       percentageDiscountEC.text = discount.percentage.toString();
+      controller.setDiscountType(DiscountType.percentage);
     } else if (discount is DiscountTakesPaidEntity) {
       amountTakesEC.text = discount.amountTakes.toString();
       amountPaidEC.text = discount.amountPaid.toString();
+      controller.setDiscountType(DiscountType.takePay);
     }
     super.initState();
   }
@@ -205,7 +209,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
             Observer(
               builder: (_) {
                 return ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     final product = ProductEntity(
                       id: widget.product.id,
                       title: titleEC.text,
@@ -251,8 +255,10 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                       default:
                         throw Exception('Not found Disconte Type Data');
                     }
-
-                    Modular.to.pop(discount);
+                    widget.discount != null
+                        ? await Modular.get<DiscountController>().updateDiscount(discount)
+                        : await Modular.get<DiscountController>().createDiscount(discount);
+                    Modular.to.pushNamedAndRemoveUntil('/discount', (p0) => false);
                   },
                   child: Text(widget.discount != null ? 'Atualizar' : 'Salvar'),
                 );

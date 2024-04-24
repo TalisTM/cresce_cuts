@@ -1,8 +1,6 @@
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/enums/enums.dart';
-import '../../../product/domain/entities/product_entity.dart';
 import '../../domain/entities/discount_entity.dart';
 import '../../domain/usecases/create_discount_usecase.dart';
 import '../../domain/usecases/delete_discount_usecase.dart';
@@ -49,17 +47,7 @@ abstract class DiscountControllerBase with Store {
   }
 
   @action
-  Future<void> createDiscount() async {
-    ProductEntity? product = await Modular.to.pushNamed('/product');
-    if (product == null) return;
-
-    DiscountEntity? discount = await Modular.to.pushNamed(
-      '/crud-discount',
-      arguments: {'product': product},
-    );
-
-    if (discount == null) return;
-
+  Future<void> createDiscount(DiscountEntity discount) async {
     status = Status.loading;
     await _createDiscountUseCase(discount: discount).then((result) {
       result.fold(
@@ -71,15 +59,8 @@ abstract class DiscountControllerBase with Store {
 
   @action
   Future<void> updateDiscount(DiscountEntity discount) async {
-    DiscountEntity? updatedDiscount = await Modular.to.pushNamed(
-      '/crud-discount',
-      arguments: {'product': discount.product, 'discount': discount},
-    );
-
-    if (updatedDiscount == null) return;
-
     status = Status.loading;
-    await _updateDiscountUseCase(discount: updatedDiscount).then((result) {
+    await _updateDiscountUseCase(discount: discount).then((result) {
       result.fold(
         (error) => status = Status.error,
         (_) => getDiscounts(),

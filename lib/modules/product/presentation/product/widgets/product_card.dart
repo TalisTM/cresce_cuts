@@ -12,7 +12,10 @@ class ProductCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       child: InkWell(
-        onTap: () => Modular.to.pop(product),
+        onTap: () => Modular.to.pushNamed(
+          '/discount/crud-discount',
+          arguments: {'product': product},
+        ),
         borderRadius: BorderRadius.circular(8),
         child: Container(
           decoration: BoxDecoration(

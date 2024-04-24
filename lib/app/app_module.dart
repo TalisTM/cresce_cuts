@@ -6,6 +6,7 @@ import '../core/services/local_storage/local_storage.dart';
 import '../core/services/local_storage/shared_preferences_local_storage_impl.dart';
 import '../modules/discount/discount_module.dart';
 import '../modules/product/product_module.dart';
+import '../modules/splash/splash_module.dart';
 
 class AppModule extends Module {
   @override
@@ -16,7 +17,8 @@ class AppModule extends Module {
 
   @override
   void routes(r) {
-    r.module('/', module: DiscountModule());
+    r.module('/', module: SplashModule());
+    r.module('/discount', module: DiscountModule());
     r.module('/product', module: ProductModule());
   }
 }

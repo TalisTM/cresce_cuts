@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../domain/entities/discount_entity.dart';
 
 class DiscountDetailsPage extends StatelessWidget {
   final DiscountEntity discount;
-  final VoidCallback onEditTap;
-  const DiscountDetailsPage({super.key, required this.discount, required this.onEditTap});
+  const DiscountDetailsPage({super.key, required this.discount});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,10 @@ class DiscountDetailsPage extends StatelessWidget {
             Text(discount.product.title),
             Text(discount.product.description),
             ElevatedButton(
-              onPressed: onEditTap,
+              onPressed: () => Modular.to.pushNamed(
+                '/discount/crud-discount',
+                arguments: {'product': discount.product, 'discount': discount},
+              ),
               child: const Text("Editar desconto"),
             ),
           ],

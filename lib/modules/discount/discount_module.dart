@@ -30,7 +30,7 @@ class DiscountModule extends Module {
     i.addLazySingleton<UpdateDiscountUseCase>(UpdateDiscountUseCaseImpl.new);
     i.addLazySingleton<DeleteDiscountUseCase>(DeleteDiscountUseCaseImpl.new);
     i.addLazySingleton<DiscountController>(DiscountController.new);
-    i.addLazySingleton<CrudDiscountController>(CrudDiscountController.new);
+    i.add<CrudDiscountController>(CrudDiscountController.new);
   }
 
   @override
@@ -43,12 +43,6 @@ class DiscountModule extends Module {
         discount: r.args.data['discount'],
       ),
     );
-    r.child(
-      '/discount-details',
-      child: (context) => DiscountDetailsPage(
-        discount: r.args.data['discount'],
-        onEditTap: r.args.data['onEditTap'],
-      ),
-    );
+    r.child('/discount-details', child: (context) => DiscountDetailsPage(discount: r.args.data));
   }
 }

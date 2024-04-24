@@ -53,8 +53,9 @@ mixin _$DiscountController on DiscountControllerBase, Store {
       AsyncAction('DiscountControllerBase.createDiscount', context: context);
 
   @override
-  Future<void> createDiscount() {
-    return _$createDiscountAsyncAction.run(() => super.createDiscount());
+  Future<void> createDiscount(DiscountEntity discount) {
+    return _$createDiscountAsyncAction
+        .run(() => super.createDiscount(discount));
   }
 
   late final _$updateDiscountAsyncAction =

@@ -8,8 +8,7 @@ import '../../../domain/entities/discount_takes_paid_entity.dart';
 
 class DiscountCard extends StatelessWidget {
   final DiscountEntity discount;
-  final VoidCallback onTap;
-  const DiscountCard({super.key, required this.discount, required this.onTap});
+  const DiscountCard({super.key, required this.discount});
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +88,9 @@ class DiscountCard extends StatelessWidget {
             ),
             Container(color: Colors.grey[300], height: 1),
             TextButton(
-              onPressed: () => Modular.to.navigate(
-                '/discount-details',
-                arguments: {'discount': discount, 'onEditTap': onTap},
+              onPressed: () => Modular.to.pushNamed(
+                '/discount/discount-details',
+                arguments: discount,
               ),
               child: const Text('Ver desconto'),
             ),

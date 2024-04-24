@@ -47,10 +47,7 @@ class _DiscountPageState extends State<DiscountPage> {
                     itemCount: controller.discounts.length,
                     itemBuilder: (context, index) {
                       final discount = discounts[index];
-                      return DiscountCard(
-                        discount: discount,
-                        onTap: () => controller.updateDiscount(discount),
-                      );
+                      return DiscountCard(discount: discount);
                     },
                   );
           } else if (controller.status == Status.error) {
@@ -67,7 +64,7 @@ class _DiscountPageState extends State<DiscountPage> {
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(horizontal: 20),
         child: ElevatedButton(
-          onPressed: () => controller.createDiscount(),
+          onPressed: () => Modular.to.pushNamed('/product'),
           child: const Text("Cadastrar desconto"),
         ),
       ),
