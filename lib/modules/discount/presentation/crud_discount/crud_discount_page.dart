@@ -314,7 +314,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                             final product = ProductEntity(
                               id: widget.product.id,
                               title: titleEC.text,
-                              price: double.parse(priceEC.text.replaceAll(',', '.')),
+                              price: UtilBrasilFields.converterMoedaParaDouble(priceEC.text),
                               category: widget.product.category,
                               description: descriptionEC.text,
                               image: widget.product.image,
@@ -331,7 +331,9 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                                   isActive: isActive,
                                   activationDate: activationDate,
                                   deactivationDate: deactivationDate,
-                                  howMuckPay: double.parse(howMuchPayEC.text.replaceAll(',', '.')),
+                                  howMuckPay: UtilBrasilFields.converterMoedaParaDouble(
+                                    howMuchPayEC.text,
+                                  ),
                                 );
                                 break;
                               case DiscountType.percentage:
@@ -341,9 +343,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                                   isActive: isActive,
                                   activationDate: activationDate,
                                   deactivationDate: deactivationDate,
-                                  percentage: double.parse(
-                                    percentageDiscountEC.text.replaceAll(',', '.'),
-                                  ),
+                                  percentage: double.parse(percentageDiscountEC.text),
                                 );
                                 break;
                               case DiscountType.takePay:
