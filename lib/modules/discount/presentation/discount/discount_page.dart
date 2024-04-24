@@ -30,9 +30,7 @@ class _DiscountPageState extends State<DiscountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Descontos'),
-      ),
+      appBar: AppBar(title: const Text('Descontos')),
       body: Observer(
         builder: (context) {
           if (controller.status == Status.success) {

@@ -22,7 +22,7 @@ class SelectDiscountDateWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 20),
-        const Text("Validade"),
+        Text("Validade", style: Theme.of(context).textTheme.bodySmall),
         const SizedBox(height: 10),
         Row(
           children: [
@@ -101,7 +101,9 @@ class _DateTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String date = '__/__/____';
-    if (value != null) date = "${UtilData.obterDataDDMM(value!)} - ${UtilData.obterHoraHHMM(value!)}";
+    if (value != null) {
+      date = "${UtilData.obterDataDDMM(value!)} - ${UtilData.obterHoraHHMM(value!)}";
+    }
     return Expanded(
       child: InkWell(
         onTap: onTap,
@@ -116,8 +118,8 @@ class _DateTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(10)),
           child: Column(
             children: [
-              Text(label),
-              Text(date),
+              Text(label, style: Theme.of(context).textTheme.bodyLarge),
+              Text(date, style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
         ),

@@ -63,7 +63,7 @@ class CustomTextField extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 5, bottom: 5),
-            child: Text(label),
+            child: Text(label, style: Theme.of(context).textTheme.bodySmall),
           ),
           TextFormField(
             decoration: InputDecoration(

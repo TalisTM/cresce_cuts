@@ -41,7 +41,12 @@ class ProductCard extends StatelessWidget {
                       child: Image.network(product.image),
                     ),
                     const SizedBox(width: 10),
-                    Expanded(child: Text(product.title)),
+                    Expanded(
+                      child: Text(
+                        product.title,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -51,8 +56,8 @@ class ProductCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Descrição:'),
-                    Text(product.description),
+                    Text('Descrição:', style: Theme.of(context).textTheme.bodyLarge),
+                    Text(product.description, style: Theme.of(context).textTheme.bodySmall),
                   ],
                 ),
               ),
@@ -62,6 +67,7 @@ class ProductCard extends StatelessWidget {
                 child: Text(
                   "Preço: R\$${product.price.toStringAsFixed(2)}",
                   textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ],

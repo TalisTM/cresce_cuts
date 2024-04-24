@@ -13,9 +13,15 @@ class TryAgain extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             const SizedBox(height: 10),
-            ElevatedButton(onPressed: tryAgain, child: const Text("Tente novamente")),
+            ElevatedButton(
+              onPressed: tryAgain,
+              child: const Text("Tente novamente"),
+            ),
           ],
         ),
       ),

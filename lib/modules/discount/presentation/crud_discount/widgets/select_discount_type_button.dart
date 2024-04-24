@@ -14,7 +14,7 @@ class SelectDiscountTypeButton extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 20),
-        const Text('Tipo de desconto'),
+        Text('Tipo de desconto', style: Theme.of(context).textTheme.bodySmall),
         const SizedBox(height: 10),
         Row(
           children: [
@@ -65,7 +65,9 @@ class _SelectButton extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: TextStyle(color: isActive ? AppThemes.lightGrey : AppThemes.primary),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: isActive ? AppThemes.lightGrey : AppThemes.primary,
+                  ),
             ),
           ),
         ),

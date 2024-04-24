@@ -30,9 +30,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Escolha um produto'),
-      ),
+      appBar: AppBar(title: const Text('Escolha um produto')),
       body: Observer(
         builder: (context) {
           if (controller.status == Status.success) {

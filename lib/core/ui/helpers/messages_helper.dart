@@ -18,12 +18,12 @@ mixin MessageHelper<T extends StatefulWidget> on State<T> {
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(title),
+              child: Text(title, style: Theme.of(context).textTheme.bodyLarge),
             ),
             if (content != null)
               Padding(
                 padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-                child: Text(content),
+                child: Text(content, style: Theme.of(context).textTheme.bodySmall),
               ),
             const SizedBox(height: 30),
             Row(
@@ -32,14 +32,20 @@ mixin MessageHelper<T extends StatefulWidget> on State<T> {
                   Expanded(
                     child: TextButton(
                       onPressed: onPressedSecondaryButton ?? () => Navigator.pop(context),
-                      child: Text(textSecondaryButton),
+                      child: Text(
+                        textSecondaryButton,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
                   ),
                 if (textPrimaryButton != null)
                   Expanded(
                     child: TextButton(
                       onPressed: onPressedPrimaryButton ?? () => Navigator.pop(context),
-                      child: Text(textPrimaryButton),
+                      child: Text(
+                        textPrimaryButton,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
                   ),
               ],
@@ -51,7 +57,13 @@ mixin MessageHelper<T extends StatefulWidget> on State<T> {
   }
 
   void showCustomSnackBar(String message) {
-    final snackBar = SnackBar(content: Text(message, textAlign: TextAlign.center));
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

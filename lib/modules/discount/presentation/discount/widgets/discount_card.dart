@@ -2,6 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../../core/ui/themes/app_themes.dart';
 import '../../../domain/entities/discount_entity.dart';
 import '../../../domain/entities/discount_of_by_entity.dart';
 import '../../../domain/entities/discount_percentage_entity.dart';
@@ -57,8 +58,24 @@ class DiscountCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(discount.product.title),
-                            Text('Desconto: $discountType'),
+                            Text(
+                              discount.product.title,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Desconto: ',
+                                    style: Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                  TextSpan(
+                                    text: discountType,
+                                    style: Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -79,8 +96,8 @@ class DiscountCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Data ativação'),
-                            Text(activationDate),
+                            Text('Data ativação', style: Theme.of(context).textTheme.bodyLarge),
+                            Text(activationDate, style: Theme.of(context).textTheme.bodySmall),
                           ],
                         ),
                       ),
@@ -88,8 +105,11 @@ class DiscountCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Data inativação'),
-                            Text(deactivationDate),
+                            Text(
+                              'Data inativação',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            Text(deactivationDate, style: Theme.of(context).textTheme.bodySmall),
                           ],
                         ),
                       ),
@@ -104,13 +124,13 @@ class DiscountCard extends StatelessWidget {
                 '/discount/discount-details',
                 arguments: discount.id,
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Ver desconto'),
-                  SizedBox(width: 5),
-                  Icon(Icons.remove_red_eye_outlined),
+                  Text('Ver desconto', style: Theme.of(context).textTheme.bodyLarge),
+                  const SizedBox(width: 5),
+                  const Icon(Icons.remove_red_eye_outlined, color: AppThemes.darkBlue),
                 ],
               ),
             ),

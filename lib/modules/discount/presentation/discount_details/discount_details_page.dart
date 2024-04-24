@@ -17,9 +17,7 @@ class DiscountDetailsPage extends StatelessWidget {
         final discount = discounts.firstWhere((d) => d.id == discountId);
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Descontos'),
-          ),
+          appBar: AppBar(title: const Text('Descontos')),
           body: CustomScrollView(
             slivers: [
               SliverPadding(
@@ -48,8 +46,12 @@ class DiscountDetailsPage extends StatelessWidget {
                         ),
                       ),
                       DiscountInfoWidget(discount: discount),
-                      Text(discount.product.title),
-                      Text(discount.product.description),
+                      Text(discount.product.title, style: Theme.of(context).textTheme.titleLarge),
+                      const SizedBox(height: 10),
+                      Text(
+                        discount.product.description,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
                     ],
                   ),
                 ),

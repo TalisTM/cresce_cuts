@@ -15,7 +15,14 @@ class AppThemes {
         brightness: Brightness.light,
         useMaterial3: false,
         primaryColor: primary,
-        fontFamily: 'poppins',
+        fontFamily: 'rubik',
+        textTheme: const TextTheme(
+          bodySmall: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: black),
+          bodyLarge: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: darkBlue),
+          titleLarge: TextStyle(color: black, fontWeight: FontWeight.w700, fontSize: 16),
+          displaySmall: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 12),
+          displayLarge: TextStyle(color: white, fontWeight: FontWeight.w600, fontSize: 16),
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: white,
           elevation: 0.8,

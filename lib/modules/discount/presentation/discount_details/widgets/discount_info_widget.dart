@@ -50,7 +50,7 @@ class DiscountInfoWidget extends StatelessWidget {
             decoration: decoration,
             child: Text(
               title,
-              style: const TextStyle(color: Colors.white),
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
           const SizedBox(height: 10),
@@ -61,14 +61,17 @@ class DiscountInfoWidget extends StatelessWidget {
                 decoration: decoration,
                 child: Text(
                   subtitle,
-                  style: const TextStyle(color: Colors.white),
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
               if (subTitlelineThrough != null) ...[
                 const SizedBox(width: 10),
                 Text(
                   subTitlelineThrough,
-                  style: const TextStyle(decoration: TextDecoration.lineThrough),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(decoration: TextDecoration.lineThrough),
                 ),
               ],
             ],
