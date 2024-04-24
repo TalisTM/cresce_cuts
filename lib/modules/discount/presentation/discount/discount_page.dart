@@ -45,6 +45,7 @@ class _DiscountPageState extends State<DiscountPage> {
                   )
                 : ListView.builder(
                     itemCount: controller.discounts.length,
+                    padding: const EdgeInsets.only(bottom: 80),
                     itemBuilder: (context, index) {
                       final discount = discounts[index];
                       return DiscountCard(discount: discount);

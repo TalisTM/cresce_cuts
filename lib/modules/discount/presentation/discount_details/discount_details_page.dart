@@ -13,38 +13,55 @@ class DiscountDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Descontos'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Switch(value: true, onChanged: (_) {}),
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(20),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate.fixed(
+                [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Switch(value: true, onChanged: (_) {}),
+                  ),
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.grey[200]!),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Image.network(discount.product.image),
+                    ),
+                  ),
+                  _DiscountInfo(),
+                  Text(discount.product.title),
+                  Text(discount.product.description),
+                ],
+              ),
             ),
-            AspectRatio(
-              aspectRatio: 1,
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[200]!),
-                  borderRadius: BorderRadius.circular(8),
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  child: ElevatedButton(
+                    onPressed: () => Modular.to.pushNamed(
+                      '/discount/crud-discount',
+                      arguments: {'product': discount.product, 'discount': discount},
+                    ),
+                    child: const Text("Editar desconto"),
+                  ),
                 ),
-                child: Image.network(discount.product.image),
-              ),
+              ],
             ),
-            _DiscountInfo(),
-            Text(discount.product.title),
-            Text(discount.product.description),
-            ElevatedButton(
-              onPressed: () => Modular.to.pushNamed(
-                '/discount/crud-discount',
-                arguments: {'product': discount.product, 'discount': discount},
-              ),
-              child: const Text("Editar desconto"),
-            ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
