@@ -5,6 +5,7 @@ class DiscountOfByEntity extends DiscountEntity {
   const DiscountOfByEntity({
     required super.id,
     required super.product,
+    required super.isActive,
     required super.activationDate,
     required super.deactivationDate,
     required this.howMuckPay,

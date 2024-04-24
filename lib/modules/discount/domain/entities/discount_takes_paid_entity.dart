@@ -6,6 +6,7 @@ class DiscountTakesPaidEntity extends DiscountEntity {
   const DiscountTakesPaidEntity({
     required super.id,
     required super.product,
+    required super.isActive,
     required super.activationDate,
     required super.deactivationDate,
     required this.amountTakes,

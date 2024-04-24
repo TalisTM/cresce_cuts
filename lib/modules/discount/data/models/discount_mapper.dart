@@ -18,19 +18,17 @@ class DiscountMapper {
 
     map['id'] = discount.id;
     map['product'] = ProductMapper.toMap(discount.product);
+    map['isActive'] = discount.isActive;
     map['activationDate'] = discount.activationDate.millisecondsSinceEpoch;
     map['deactivationDate'] = discount.deactivationDate.millisecondsSinceEpoch;
 
     if (discount is DiscountOfByEntity) {
       map['howMuckPay'] = discount.howMuckPay;
       map['discountType'] = _discountOfByKey;
-    }
-    if (discount is DiscountPercentageEntity) {
+    } else if (discount is DiscountPercentageEntity) {
       map['percentage'] = discount.percentage;
       map['discountType'] = _discountPercentageKey;
-    }
-
-    if (discount is DiscountTakesPaidEntity) {
+    } else if (discount is DiscountTakesPaidEntity) {
       map['amountPaid'] = discount.amountPaid;
       map['amountTakes'] = discount.amountTakes;
       map['discountType'] = _discountTakesPaidKey;
@@ -46,6 +44,7 @@ class DiscountMapper {
       return DiscountOfByEntity(
         id: map['id'],
         product: ProductMapper.fromMap(map['product'] as Map<String, dynamic>),
+        isActive: map['isActive'],
         activationDate: DateTime.fromMillisecondsSinceEpoch(map['activationDate'] as int),
         deactivationDate: DateTime.fromMillisecondsSinceEpoch(map['deactivationDate'] as int),
         howMuckPay: map['howMuckPay'] as double,
@@ -54,6 +53,7 @@ class DiscountMapper {
       return DiscountPercentageEntity(
         id: map['id'],
         product: ProductMapper.fromMap(map['product'] as Map<String, dynamic>),
+        isActive: map['isActive'],
         activationDate: DateTime.fromMillisecondsSinceEpoch(map['activationDate'] as int),
         deactivationDate: DateTime.fromMillisecondsSinceEpoch(map['deactivationDate'] as int),
         percentage: map['percentage'] as double,
@@ -62,10 +62,44 @@ class DiscountMapper {
       return DiscountTakesPaidEntity(
         id: map['id'],
         product: ProductMapper.fromMap(map['product'] as Map<String, dynamic>),
+        isActive: map['isActive'],
         activationDate: DateTime.fromMillisecondsSinceEpoch(map['activationDate'] as int),
         deactivationDate: DateTime.fromMillisecondsSinceEpoch(map['deactivationDate'] as int),
         amountTakes: map['amountTakes'] as int,
         amountPaid: map['amountPaid'] as int,
+      );
+    }
+  }
+
+  static DiscountEntity toggleIsActivate(DiscountEntity discount) {
+    if (discount is DiscountOfByEntity) {
+      return DiscountOfByEntity(
+        id: discount.id,
+        product: discount.product,
+        isActive: !discount.isActive,
+        activationDate: discount.activationDate,
+        deactivationDate: discount.deactivationDate,
+        howMuckPay: discount.howMuckPay,
+      );
+    } else if (discount is DiscountPercentageEntity) {
+      return DiscountPercentageEntity(
+        id: discount.id,
+        product: discount.product,
+        isActive: !discount.isActive,
+        activationDate: discount.activationDate,
+        deactivationDate: discount.deactivationDate,
+        percentage: discount.percentage,
+      );
+    } else {
+      discount as DiscountTakesPaidEntity;
+      return DiscountTakesPaidEntity(
+        id: discount.id,
+        product: discount.product,
+        isActive: !discount.isActive,
+        activationDate: discount.activationDate,
+        deactivationDate: discount.deactivationDate,
+        amountTakes: discount.amountTakes,
+        amountPaid: discount.amountPaid,
       );
     }
   }

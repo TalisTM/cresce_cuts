@@ -58,6 +58,16 @@ mixin _$DiscountController on DiscountControllerBase, Store {
         .run(() => super.createDiscount(discount));
   }
 
+  late final _$toggleIsActvateDiscountAsyncAction = AsyncAction(
+      'DiscountControllerBase.toggleIsActvateDiscount',
+      context: context);
+
+  @override
+  Future<void> toggleIsActvateDiscount(DiscountEntity discount) {
+    return _$toggleIsActvateDiscountAsyncAction
+        .run(() => super.toggleIsActvateDiscount(discount));
+  }
+
   late final _$updateDiscountAsyncAction =
       AsyncAction('DiscountControllerBase.updateDiscount', context: context);
 

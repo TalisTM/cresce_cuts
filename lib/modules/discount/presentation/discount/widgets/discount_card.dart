@@ -5,6 +5,7 @@ import '../../../domain/entities/discount_entity.dart';
 import '../../../domain/entities/discount_of_by_entity.dart';
 import '../../../domain/entities/discount_percentage_entity.dart';
 import '../../../domain/entities/discount_takes_paid_entity.dart';
+import '../discount_controller.dart';
 
 class DiscountCard extends StatelessWidget {
   final DiscountEntity discount;
@@ -56,7 +57,11 @@ class DiscountCard extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.topRight,
-                        child: Switch(value: true, onChanged: (_) {}),
+                        child: Switch(
+                            value: discount.isActive,
+                            onChanged: (_) {
+                              Modular.get<DiscountController>().toggleIsActvateDiscount(discount);
+                            }),
                       ),
                     ],
                   ),
@@ -90,7 +95,7 @@ class DiscountCard extends StatelessWidget {
             TextButton(
               onPressed: () => Modular.to.pushNamed(
                 '/discount/discount-details',
-                arguments: discount,
+                arguments: discount.id,
               ),
               child: const Text('Ver desconto'),
             ),

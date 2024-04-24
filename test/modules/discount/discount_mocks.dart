@@ -25,8 +25,8 @@ class DeleteDiscountUseCaseMock extends Mock implements DeleteDiscountUseCase {}
 
 
 const discountsJsonMock = [
-  '{"id":1,"product":{"id":2,"title":"title","price":20.0,"category":"category","description":"description","image":"image"},"activationDate":1713582000000,"deactivationDate":1714186800000,"howMuckPay":10.0,"discountType":"discountOfBy"}',
-  '{"id":1,"product":{"id":2,"title":"title","price":20.0,"category":"category","description":"description","image":"image"},"activationDate":1713582000000,"deactivationDate":1714186800000,"howMuckPay":10.0,"discountType":"discountOfBy"}'
+  '{"id":1,"product":{"id":2,"title":"title","price":20.0,"category":"category","description":"description","image":"image"},"isActive":true,"activationDate":1713582000000,"deactivationDate":1714186800000,"howMuckPay":10.0,"discountType":"discountOfBy"}',
+  '{"id":1,"product":{"id":2,"title":"title","price":20.0,"category":"category","description":"description","image":"image"},"isActive":true,"activationDate":1713582000000,"deactivationDate":1714186800000,"howMuckPay":10.0,"discountType":"discountOfBy"}'
 ];
 
 const _productMock = ProductEntity(
@@ -41,6 +41,7 @@ const _productMock = ProductEntity(
 final discountMock = DiscountOfByEntity(
   id: 1,
   product: _productMock,
+  isActive: true,
   activationDate: DateTime.parse('2024-04-20'),
   deactivationDate: DateTime.parse('2024-04-27'),
   howMuckPay: 10.0,

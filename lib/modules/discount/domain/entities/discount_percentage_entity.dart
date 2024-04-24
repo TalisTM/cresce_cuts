@@ -5,6 +5,7 @@ class DiscountPercentageEntity extends DiscountEntity {
   const DiscountPercentageEntity({
     required super.id,
     required super.product,
+    required super.isActive,
     required super.activationDate,
     required super.deactivationDate,
     required this.percentage,

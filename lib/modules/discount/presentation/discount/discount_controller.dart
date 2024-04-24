@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/enums/enums.dart';
+import '../../data/models/discount_mapper.dart';
 import '../../domain/entities/discount_entity.dart';
 import '../../domain/usecases/create_discount_usecase.dart';
 import '../../domain/usecases/delete_discount_usecase.dart';
@@ -50,6 +51,19 @@ abstract class DiscountControllerBase with Store {
   Future<void> createDiscount(DiscountEntity discount) async {
     status = Status.loading;
     await _createDiscountUseCase(discount: discount).then((result) {
+      result.fold(
+        (error) => status = Status.error,
+        (_) => getDiscounts(),
+      );
+    });
+  }
+
+  @action
+  Future<void> toggleIsActvateDiscount(DiscountEntity discount) async {
+    final newDiscount = DiscountMapper.toggleIsActivate(discount);
+
+    status = Status.loading;
+    await _updateDiscountUseCase(discount: newDiscount).then((result) {
       result.fold(
         (error) => status = Status.error,
         (_) => getDiscounts(),

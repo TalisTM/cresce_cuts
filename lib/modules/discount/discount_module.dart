@@ -43,6 +43,6 @@ class DiscountModule extends Module {
         discount: r.args.data['discount'],
       ),
     );
-    r.child('/discount-details', child: (context) => DiscountDetailsPage(discount: r.args.data));
+    r.child('/discount-details', child: (context) => DiscountDetailsPage(discountId: r.args.data));
   }
 }

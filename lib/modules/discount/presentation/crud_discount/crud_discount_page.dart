@@ -322,11 +322,13 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
 
                             DiscountEntity discount;
                             final id = widget.discount?.id ?? DateTime.now().millisecondsSinceEpoch;
+                            final isActive = widget.discount?.isActive ?? false;
                             switch (controller.discountType) {
                               case DiscountType.ofBy:
                                 discount = DiscountOfByEntity(
                                   id: id,
                                   product: product,
+                                  isActive: isActive,
                                   activationDate: activationDate,
                                   deactivationDate: deactivationDate,
                                   howMuckPay: double.parse(howMuchPayEC.text.replaceAll(',', '.')),
@@ -336,6 +338,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                                 discount = DiscountPercentageEntity(
                                   id: id,
                                   product: product,
+                                  isActive: isActive,
                                   activationDate: activationDate,
                                   deactivationDate: deactivationDate,
                                   percentage: double.parse(
@@ -347,6 +350,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                                 discount = DiscountTakesPaidEntity(
                                   id: id,
                                   product: product,
+                                  isActive: isActive,
                                   activationDate: activationDate,
                                   deactivationDate: deactivationDate,
                                   amountPaid: int.parse(amountPaidEC.text),
