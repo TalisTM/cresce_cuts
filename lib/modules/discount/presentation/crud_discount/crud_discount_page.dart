@@ -174,8 +174,9 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
                                       keyboardType: TextInputType.number,
                                       validator: controller.validatePercent,
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        CentavosInputFormatter(),
+                                        FilteringTextInputFormatter.allow(
+                                          RegExp(r'^\d*\.?\d*$'),
+                                        ),
                                       ],
                                     ),
                                   ),
