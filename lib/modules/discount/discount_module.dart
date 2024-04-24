@@ -13,6 +13,7 @@ import 'presentation/crud_discount/crud_discount_controller.dart';
 import 'presentation/crud_discount/crud_discount_page.dart';
 import 'presentation/discount/discount_controller.dart';
 import 'presentation/discount/discount_page.dart';
+import 'presentation/discount_details/discount_details_page.dart';
 
 class DiscountModule extends Module {
   @override
@@ -40,6 +41,13 @@ class DiscountModule extends Module {
       child: (context) => CrudDiscountPage(
         product: r.args.data['product'],
         discount: r.args.data['discount'],
+      ),
+    );
+    r.child(
+      '/discount-details',
+      child: (context) => DiscountDetailsPage(
+        discount: r.args.data['discount'],
+        onEditTap: r.args.data['onEditTap'],
       ),
     );
   }

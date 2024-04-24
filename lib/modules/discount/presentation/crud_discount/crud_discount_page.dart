@@ -45,13 +45,16 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> {
     final discount = widget.discount;
     if (discount == null) return;
 
-    if(discount is DiscountOfByEntity) {
+    controller.setActivationDate(discount.activationDate);
+    controller.setDeactivationDate(discount.deactivationDate);
+
+    if (discount is DiscountOfByEntity) {
       howMuchPayEC.text = discount.howMuckPay.toString();
     } else if (discount is DiscountPercentageEntity) {
       percentageDiscountEC.text = discount.percentage.toString();
-    } else if(discount is DiscountTakesPaidEntity) {
+    } else if (discount is DiscountTakesPaidEntity) {
       amountTakesEC.text = discount.amountTakes.toString();
-        amountPaidEC.text = discount.amountPaid.toString();
+      amountPaidEC.text = discount.amountPaid.toString();
     }
     super.initState();
   }
