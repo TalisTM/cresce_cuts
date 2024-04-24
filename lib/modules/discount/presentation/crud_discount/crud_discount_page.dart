@@ -12,7 +12,6 @@ import '../../domain/entities/discount_entity.dart';
 import '../../domain/entities/discount_of_by_entity.dart';
 import '../../domain/entities/discount_percentage_entity.dart';
 import '../../domain/entities/discount_takes_paid_entity.dart';
-import '../discount/discount_controller.dart';
 import 'crud_discount_controller.dart';
 import 'widgets/select_discount_type_button.dart';
 
@@ -301,7 +300,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> with MessageHelper<
                           child: Observer(
                             builder: (_) {
                               return ElevatedButton(
-                                onPressed: () async {
+                                onPressed: () {
                                   final validate = formKey.currentState?.validate() ?? false;
                                   if (!validate) return;
 
@@ -309,69 +308,23 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> with MessageHelper<
                                   final deactivationDate = controller.deactivationDate;
 
                                   if (activationDate == null || deactivationDate == null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Escolha a data para o desconto')),
-                                    );
+                                    showCustomSnackBar('Escolha a data para o desconto');
                                     return;
                                   }
 
-                                  final product = ProductEntity(
-                                    id: widget.product.id,
+                                  controller.onConfirm(
+                                    oldDiscount: widget.discount,
+                                    oldProduct: widget.product,
                                     title: titleEC.text,
-                                    price: UtilBrasilFields.converterMoedaParaDouble(priceEC.text),
-                                    category: widget.product.category,
+                                    price: priceEC.text,
                                     description: descriptionEC.text,
-                                    image: widget.product.image,
+                                    activationDate: activationDate,
+                                    deactivationDate: deactivationDate,
+                                    howMuchPay: howMuchPayEC.text,
+                                    percentageDiscount: percentageDiscountEC.text,
+                                    amountPaid: amountPaidEC.text,
+                                    amountTakes: amountTakesEC.text,
                                   );
-
-                                  DiscountEntity discount;
-                                  final id =
-                                      widget.discount?.id ?? DateTime.now().millisecondsSinceEpoch;
-                                  final isActive = widget.discount?.isActive ?? false;
-                                  switch (controller.discountType) {
-                                    case DiscountType.ofBy:
-                                      discount = DiscountOfByEntity(
-                                        id: id,
-                                        product: product,
-                                        isActive: isActive,
-                                        activationDate: activationDate,
-                                        deactivationDate: deactivationDate,
-                                        howMuckPay: UtilBrasilFields.converterMoedaParaDouble(
-                                          howMuchPayEC.text,
-                                        ),
-                                      );
-                                      break;
-                                    case DiscountType.percentage:
-                                      discount = DiscountPercentageEntity(
-                                        id: id,
-                                        product: product,
-                                        isActive: isActive,
-                                        activationDate: activationDate,
-                                        deactivationDate: deactivationDate,
-                                        percentage: double.parse(percentageDiscountEC.text),
-                                      );
-                                      break;
-                                    case DiscountType.takePay:
-                                      discount = DiscountTakesPaidEntity(
-                                        id: id,
-                                        product: product,
-                                        isActive: isActive,
-                                        activationDate: activationDate,
-                                        deactivationDate: deactivationDate,
-                                        amountPaid: int.parse(amountPaidEC.text),
-                                        amountTakes: int.parse(amountTakesEC.text),
-                                      );
-                                      break;
-                                    default:
-                                      throw Exception('Not found Disconte Type Data');
-                                  }
-                                  widget.discount != null
-                                      ? await Modular.get<DiscountController>()
-                                          .updateDiscount(discount)
-                                      : await Modular.get<DiscountController>()
-                                          .createDiscount(discount);
-                                  Modular.to.pushNamedAndRemoveUntil('/discount', (p0) => false);
                                 },
                                 child: Text(widget.discount != null ? 'Atualizar' : 'Salvar'),
                               );
@@ -386,11 +339,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> with MessageHelper<
                                 content: 'Realmente deseja apagar o desconto?',
                                 textPrimaryButton: 'Confirmar',
                                 textSecondaryButton: 'Cancelar',
-                                onPressedPrimaryButton: () {
-                                  Modular.get<DiscountController>()
-                                      .deleteDiscount(widget.discount!);
-                                  Modular.to.pushNamedAndRemoveUntil('/discount', (p0) => false);
-                                },
+                                onPressedPrimaryButton: () => controller.onDelete(widget.discount!),
                               );
                             },
                             icon: const Icon(Icons.delete),
