@@ -47,7 +47,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> with MessageHelper<
   void initState() {
     titleEC.text = widget.product.title;
     descriptionEC.text = widget.product.description;
-    priceEC.text = widget.product.price.toString();
+    priceEC.text = UtilBrasilFields.obterReal(widget.product.price);
 
     final discount = widget.discount;
     if (discount == null) return;
@@ -56,7 +56,7 @@ class _CrudDiscountPageState extends State<CrudDiscountPage> with MessageHelper<
     controller.setDeactivationDate(discount.deactivationDate);
 
     if (discount is DiscountOfByEntity) {
-      howMuchPayEC.text = discount.howMuckPay.toString();
+      howMuchPayEC.text = UtilBrasilFields.obterReal(discount.howMuckPay);
       controller.setDiscountType(DiscountType.ofBy);
     } else if (discount is DiscountPercentageEntity) {
       percentageDiscountEC.text = discount.percentage.toString();
