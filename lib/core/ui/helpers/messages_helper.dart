@@ -61,7 +61,7 @@ mixin MessageHelper<T extends StatefulWidget> on State<T> {
       content: Text(
         message,
         textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.bodySmall,
+        style: Theme.of(context).textTheme.displaySmall,
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
